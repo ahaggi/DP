@@ -1,0 +1,84 @@
+
+Dynamic Programming is an algorithmic paradigm that solves a given complex problem by breaking it into subproblems and stores the results of subproblems to avoid computing the same results again. So Dynamic Programming is not useful when there are no common (overlapping) subproblems because there is no point storing the solutions if they are not needed again.
+
+To solve a problem with DP-algorithm, that problem has to have two main properties
+    1) Overlapping Subproblems
+    2) Optimal Substructure
+
+    1) Overlapping Subproblems:
+    when a solutions of same subproblems are needed again and again, to calculate fib(6) we'll need to calculate:
+        the fib(5) 2 times
+        the fib(3) 3 times
+        the fib(2) 5 times
+        the fib(1) 8 times
+
+
+    2) Optimal Substructure
+    Optimal substructure means, that any optimal solution to a problem of size n, is based on an optimal solution to the same problem when considering n' < n
+    For ex.
+        f(n) = f(n-1) * n
+        5! = 4! * 5
+
+
+
+Memoization V/S Tabulation
+
+    The recursive call  fib(6) will produce a tree with ~ 2^(6-1) calls/nodes; to be more accurate it will be 2^(6-1) - 9. 
+                                               fib6
+                       fib5                                              fib4
+            fib4                     fib3                     fib3                      fib2
+      fib3         fib2        fib2        fib1         fib2         fib1         fib1        fib0
+    fib2 fib1   fib1 fib0   fib1 fib0                fib1 fib0       
+    
+    fn f(n) = f(n-1) + f(f-2) 
+
+    Memoization is indeed the natural way of solving a problem, so coding is easier in memoization when we deal with a complex problem. Coming up with a specific order while dealing with lot of conditions might be difficult in the tabulation.
+
+    Also think about a case when we don't need to find the solutions of all the subproblems. In that case, we would prefer to use the memoization instead.
+
+    However, when a lot of recursive calls are required, memoization may cause memory problems because it might have stacked the recursive calls to find the solution of the deeper recursive call but we won't deal with this problem in tabulation.
+
+    Generally, memoization is also slower than tabulation because of the large recursive calls.
+
+    Thus, we have seen the idea, concepts and working of dynamic programming in this chapter. We are going to discuss some common algorithms using dynamic programming.
+
+
+
+Tabulation (Bottom-Up Approach)
+    "Bottom-Up" because we start from f(0) until we get to f(n).
+
+        F = [] //new array to store the result
+        FIBONACCI-B-UP(n)
+        F[0] = 0
+        F[1] = 1
+
+        for i in 2 to n
+            F[i] = F[i-1] + F[i-2]
+
+        return F[n]
+
+
+    Or we could use tail-recursion
+
+        //Haskell
+        fb' n = fibFn' 0 1 n
+        fibFn' a b 0 = a
+        fibFn' a b n = fibFn' b (a+b) (n-1)
+
+
+
+Memoization (Top-Down Approach)
+    "Top-Down" because we start from f(n) until we get to f(0).
+
+        F = [] //new array
+        FIBONACCI(n)
+        if F[n] == null
+            if n==0
+                F[n] = 0
+            else if n==1
+                F[n] = 1
+            else
+                F[n] = FIBONACCI(n-1) + FIBONACCI(n-2)
+        return F[n]
+
+
